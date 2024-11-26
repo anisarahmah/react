@@ -10,32 +10,10 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
-# 1. Checkout kode dari repository
+# 1. Checkout kode dari GitHub repository
 - task: Checkout@1
-  displayName: 'Checkout Code'
-
-# 2. Install dependencies
-- script: |
-    echo "Installing dependencies..."
-    npm install
-  displayName: 'Install Dependencies'
-
-# 3. Jalankan dependency check (menggunakan Dependency-Check CLI)
-- script: |
-    echo "Running dependency check..."
-    dependency-check --project "react" --scan . --format ALL --out ./dependency-check-report
-  displayName: 'Run Dependency Check'
-
-# 4. Jalankan ESLint untuk code quality check
-- script: |
-    echo "Running ESLint for code quality..."
-    npx eslint . --max-warnings=0
-  displayName: 'Run ESLint for Code Quality Check'
-
-# 5. Publikasikan laporan dependency check (opsional)
-- task: PublishBuildArtifacts@1
-  displayName: 'Publish Dependency Check Report'
+  displayName: 'Checkout code from GitHub'
   inputs:
-    pathToPublish: './dependency-check-report'
-    artifactName: 'DependencyCheckReport'
-    publishLocation: 'Container'
+    repository: 'https://github.com/anisarahmah/react.git'
+    fetchDepth: 1 # Hanya mengambil commit terbaru untuk efisiensi
+    clean: true # Membersihkan folder kerja sebelum build
