@@ -10,10 +10,8 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
-# 1. Checkout kode dari GitHub repository
+# Checkout code dari repository GitHub
 - task: Checkout@1
-  displayName: 'Checkout code from GitHub'
   inputs:
-    repository: 'https://github.com/anisarahmah/react'
-    fetchDepth: 1 # Hanya mengambil commit terbaru untuk efisiensi
-    clean: true # Membersihkan folder kerja sebelum build
+    repository: 'self'  # Repository default (GitHub)
+    clean: true  # Membersihkan file kerja sebelum checkout
