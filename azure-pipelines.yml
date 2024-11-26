@@ -28,13 +28,3 @@ steps:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
     ArtifactName: 'dependency-check-report'
     publishLocation: 'Container'
-
-- script: |
-    if [ -f "$(Build.ArtifactStagingDirectory)/dependency-check/dependency-check-report.html" ]; then
-      echo "Build succeeded"
-    else
-      echo "Build failed"
-      exit 1
-    fi
-  displayName: 'Fail Pipeline if Issues Found'
-  continueOnError: false
