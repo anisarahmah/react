@@ -14,6 +14,6 @@ steps:
 - task: Checkout@1
   displayName: 'Checkout code from GitHub'
   inputs:
-    repository: 'https://github.com/anisarahmah/react.git'
+    repository: 'https://github.com/anisarahmah/react'
     fetchDepth: 1 # Hanya mengambil commit terbaru untuk efisiensi
     clean: true # Membersihkan folder kerja sebelum build
