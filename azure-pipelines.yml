@@ -23,7 +23,7 @@ steps:
 # 3. Jalankan dependency check (menggunakan Dependency-Check CLI)
 - script: |
     echo "Running dependency check..."
-    dependency-check --project "YourProjectName" --scan . --format ALL --out ./dependency-check-report
+    dependency-check --project "react" --scan . --format ALL --out ./dependency-check-report
   displayName: 'Run Dependency Check'
 
 # 4. Jalankan ESLint untuk code quality check
