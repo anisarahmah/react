@@ -11,13 +11,6 @@ steps:
     repository: 'self'  # Repository default (GitHub)
     clean: true  # Membersihkan file kerja sebelum checkout
 
-- task: dependency-check-build-task@6
-  inputs:
-    projectName: 'belajar devops'  # Nama proyek Anda
-    format: 'JSON'  # Format laporan, bisa juga 'JSON' atau 'XML'
-    uploadReports: true  # Mengupload laporan ke pipeline
-    scanPath: '$(Build.SourcesDirectory)/src'
-
 - task: NodeTool@0
   displayName: 'Install Node.js'
   inputs:
