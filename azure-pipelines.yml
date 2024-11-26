@@ -13,9 +13,12 @@ steps:
 
 - task: dependency-check-build-task@6
   inputs:
-    projectName: 'belajar devops'
-    format: 'HTML'
-    uploadReports: true
+    projectName: 'belajar devops'  # Nama proyek Anda
+    format: 'HTML'  # Format laporan, bisa juga 'JSON' atau 'XML'
+    uploadReports: true  # Mengupload laporan ke pipeline
+    failBuildOnCVSS: '7'  # Tentukan tingkat CVSS (seperti 7) yang memicu kegagalan build jika ditemukan kerentanannya
+    scanPath: '$(Build.SourcesDirectory)'  # Jalur tempat kode berada
+    suppressionsFile: '' 
 
 - task: NodeTool@0
   displayName: 'Install Node.js'
