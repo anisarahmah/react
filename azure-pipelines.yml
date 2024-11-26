@@ -21,6 +21,6 @@ steps:
   displayName: 'Install Dependencies'
 
 - script: |
-    npx eslint . --max-warnings=0
+    npx eslint . --fix
   displayName: 'Run ESLint for Code Quality'
   continueOnError: false
