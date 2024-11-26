@@ -1,0 +1,41 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- master
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+# 1. Checkout kode dari repository
+- task: Checkout@1
+  displayName: 'Checkout Code'
+
+# 2. Install dependencies
+- script: |
+    echo "Installing dependencies..."
+    npm install
+  displayName: 'Install Dependencies'
+
+# 3. Jalankan dependency check (menggunakan Dependency-Check CLI)
+- script: |
+    echo "Running dependency check..."
+    dependency-check --project "YourProjectName" --scan . --format ALL --out ./dependency-check-report
+  displayName: 'Run Dependency Check'
+
+# 4. Jalankan ESLint untuk code quality check
+- script: |
+    echo "Running ESLint for code quality..."
+    npx eslint . --max-warnings=0
+  displayName: 'Run ESLint for Code Quality Check'
+
+# 5. Publikasikan laporan dependency check (opsional)
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Dependency Check Report'
+  inputs:
+    pathToPublish: './dependency-check-report'
+    artifactName: 'DependencyCheckReport'
+    publishLocation: 'Container'
