@@ -22,6 +22,12 @@ steps:
   displayName: 'Run ESLint for Code Quality'
   continueOnError: false
 
+- task: dependency-check-build-task@6
+  inputs:
+    projectName: 'belajarDevops'
+    format: 'JSON'
+    scanPath: '$(Build.SourcesDirectory)/src'
+
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Artifacts'
   inputs:
