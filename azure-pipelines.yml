@@ -10,3 +10,37 @@ steps:
   inputs:
     repository: 'self'  # Repository default (GitHub)
     clean: true  # Membersihkan file kerja sebelum checkout
+
+- task: dependency-check-build-task@6
+  inputs:
+    projectName: 'belajar devops'
+    format: 'HTML'
+    uploadReports: true
+
+- task: NodeTool@0
+  displayName: 'Install Node.js'
+  inputs:
+    versionSpec: '22.10.0'
+
+- script: |
+    npm install
+    npx eslint .
+  displayName: 'Run ESLint for Code Quality'
+  continueOnError: false
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifacts'
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'dependency-check-report'
+    publishLocation: 'Container'
+
+- script: |
+    if [ -f "$(Build.ArtifactStagingDirectory)/dependency-check/dependency-check-report.html" ]; then
+      echo "Build succeeded"
+    else
+      echo "Build failed"
+      exit 1
+    fi
+  displayName: 'Fail Pipeline if Issues Found'
+  continueOnError: false
