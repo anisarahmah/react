@@ -39,4 +39,4 @@ steps:
     SmtpServer: smtp.gmail.com
     SmtpUsername: nisarah1220@gmail.com
     SmtpPassword: $(mailPass)
-    UseSSL: false
+    UseSSL: true
