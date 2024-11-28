@@ -33,8 +33,6 @@ steps:
     Body: |
       Hi Team,
             The code quality check has failed. Please review the logs.
-            Pipeline: $(PipelineName)
-            Build ID: $(Build.BuildId)
     BodyAsHtml: false
     AddAttachment: false
     SmtpPort: 587
