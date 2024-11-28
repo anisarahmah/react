@@ -24,3 +24,16 @@ steps:
     npx eslint . --fix
   displayName: 'Run ESLint for Code Quality'
   continueOnError: false
+
+- task: SendEmail@1
+  inputs:
+    To: 'nisarah1220@gmail.com'
+    From: 'songyyichoi@gmail.com'
+    Subject: 'Code Quality Check Failed'
+    Body: |
+      Hi Team,
+            The code quality check has failed. Please review the logs.
+            Pipeline: $(PipelineName)
+            Build ID: $(Build.BuildId)
+    BodyAsHtml: false
+    AddAttachment: false
