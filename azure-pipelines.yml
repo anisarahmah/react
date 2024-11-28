@@ -17,6 +17,11 @@ steps:
   inputs:
     versionSpec: '22.10.0'
 
+# Install dependencies
+- script: |
+    npm install
+  displayName: 'Install Dependencies'
+
 # Cache dependencies
 - task: CacheBeta@2
   inputs:
@@ -24,11 +29,6 @@ steps:
     path: $(Pipeline.Workspace)/.npm
     cacheHitVar: NpmCacheRestored
   displayName: 'Cache Node.js Dependencies'
-
-# Install dependencies
-- script: |
-    npm install
-  displayName: 'Install Dependencies'
 
 # Linting dengan fix
 - script: |
