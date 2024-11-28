@@ -23,9 +23,14 @@ steps:
   displayName: 'Install Dependencies'
 
 # Pastikan direktori cache ada
-- script: |
-    mkdir -p $(Pipeline.Workspace)/.npm
+- task: PowerShell@2
   displayName: 'Ensure Cache Directory Exists'
+  inputs:
+    targetType: 'inline'
+    script: |
+      if (-not (Test-Path "$(Pipeline.Workspace)\.npm")) {
+          New-Item -ItemType Directory -Path "$(Pipeline.Workspace)\.npm"
+      }
 
 # Cache dependencies
 - task: CacheBeta@2
