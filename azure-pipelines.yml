@@ -28,7 +28,7 @@ steps:
 - task: SendEmail@1
   inputs:
     To: 'nisarah1220@gmail.com'
-    From: 'songyyichoi@gmail.com'
+    From: 'nisarah1220@gmail.com'
     Subject: 'Code Quality Check Failed'
     Body: |
       Hi Team,
