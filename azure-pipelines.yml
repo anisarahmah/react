@@ -22,23 +22,24 @@ steps:
     npm install
   displayName: 'Install Dependencies'
 
-# Pastikan direktori cache ada
-- task: PowerShell@2
-  displayName: 'Ensure Cache Directory Exists'
-  inputs:
-    targetType: 'inline'
-    script: |
-      if (-not (Test-Path "$(Pipeline.Workspace)\.npm")) {
-          New-Item -ItemType Directory -Path "$(Pipeline.Workspace)\.npm"
-      }
-
-# Cache dependencies
+# Cache Node.js dependencies untuk mempercepat build selanjutnya
 - task: CacheBeta@2
   inputs:
-    key: 'npm | "$(Agent.OS)" | package-lock.json'
+    key: 'npm | "$(Agent.OS)" | $(Build.SourcesDirectory)/package-lock.json'  # Cache berdasarkan package-lock.json
     path: $(Pipeline.Workspace)/.npm
     cacheHitVar: NpmCacheRestored
   displayName: 'Cache Node.js Dependencies'
+
+# Dependency check dengan OWASP
+- task: dependency-check-build-task@6
+  inputs:
+    format: 'HTML'
+    uploadReports: true
+    reportDirectory: '$(Build.ArtifactStagingDirectory)/dependency-check'
+    reportFilename: 'dependency-check-report.html'
+    scanPath: '$(Build.SourcesDirectory)/src'  # Lokasi untuk pemindaian dependensi
+    cvssFailureThreshold: '7.0'
+    uploadSARIFReports: true
 
 # Linting dengan fix
 - script: |
