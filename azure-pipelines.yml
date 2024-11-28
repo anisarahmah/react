@@ -37,6 +37,6 @@ steps:
     AddAttachment: false
     SmtpPort: 587
     SmtpServer: smtp.gmail.com
-    SmtpUsername: ssunjixoxo@gmail.com
+    SmtpUsername: nisarah1220@gmail.com
     SmtpPassword: $(mailPass)
     UseSSL: false
