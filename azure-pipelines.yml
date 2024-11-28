@@ -37,3 +37,8 @@ steps:
             Build ID: $(Build.BuildId)
     BodyAsHtml: false
     AddAttachment: false
+    SmtpPort: 587
+    SmtpServer: smtp.gmail.com
+    SmtpUsername: ssunjixoxo@gmail.com
+    SmtpPassword: $(mailPass)
+    UseSSL: false
