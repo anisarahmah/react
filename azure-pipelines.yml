@@ -40,6 +40,7 @@ steps:
     scanPath: '$(Build.SourcesDirectory)/src'  # Lokasi untuk pemindaian dependensi
     cvssFailureThreshold: '7.0'
     uploadSARIFReports: true
+    projectName: 'belajar devops'
 
 # Linting dengan fix
 - script: |
