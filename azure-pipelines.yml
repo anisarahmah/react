@@ -5,11 +5,6 @@ pool:
   name: 'Default'
 
 steps:
-# Validasi keberadaan package.json
-- script: |
-    if [ ! -f package.json ]; then echo "package.json not found!"; exit 1; fi
-  displayName: 'Validate package.json'
-
 # Checkout code dari repository GitHub
 - task: Checkout@1
   inputs:
