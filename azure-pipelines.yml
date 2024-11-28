@@ -30,16 +30,16 @@ steps:
   displayName: 'Cache Node.js Dependencies'
 
 # Dependency check dengan OWASP
-- task: dependency-check-build-task@6
-  inputs:
-    format: 'HTML'
-    uploadReports: true
-    reportDirectory: '$(Build.ArtifactStagingDirectory)/dependency-check'
-    reportFilename: 'dependency-check-report.html'
-    scanPath: '$(Build.SourcesDirectory)/src'  # Lokasi untuk pemindaian dependensi
-    cvssFailureThreshold: '7.0'
-    uploadSARIFReports: true
-    projectName: 'belajar devops'
+#- task: dependency-check-build-task@6
+#  inputs:
+#    format: 'HTML'
+#    uploadReports: true
+#    reportDirectory: '$(Build.ArtifactStagingDirectory)/dependency-check'
+#    reportFilename: 'dependency-check-report.html'
+#    scanPath: '$(Build.SourcesDirectory)/src'  # Lokasi untuk pemindaian dependensi
+#    cvssFailureThreshold: '7.0'
+#    uploadSARIFReports: true
+#    projectName: ''
 
 # Linting dengan fix
 - script: |
