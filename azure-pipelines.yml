@@ -21,6 +21,15 @@ steps:
     npm install
   displayName: 'Install Dependencies'
 
+- task: PowerShell@2
+  displayName: 'Ensure Cache Directory Exists'
+  inputs:
+    targetType: 'inline'
+    script: |
+      if (-not (Test-Path "$(Pipeline.Workspace)\.npm")) {
+          New-Item -ItemType Directory -Path "$(Pipeline.Workspace)\.npm"
+      }
+
 # Cache Node.js dependencies untuk mempercepat build selanjutnya
 - task: CacheBeta@2
   inputs:
