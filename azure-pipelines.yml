@@ -2,31 +2,54 @@ trigger:
 - master
 
 pool:
-  name: 'Default'  # Gunakan pool agen yang sesuai dengan self-hosted agent Anda
+  name: 'Default'
 
 steps:
+# Validasi keberadaan package.json
+- script: |
+    if [ ! -f package.json ]; then echo "package.json not found!"; exit 1; fi
+  displayName: 'Validate package.json'
+
 # Checkout code dari repository GitHub
 - task: Checkout@1
   inputs:
-    repository: 'self'  # Repository default (GitHub)
-    clean: true  # Membersihkan file kerja sebelum checkout
+    repository: 'self'
+    clean: true
 
+# Setup Node.js
 - task: NodeTool@0
   displayName: 'Install Node.js'
   inputs:
     versionSpec: '22.10.0'
 
+# Cache dependencies
+- task: CacheBeta@2
+  inputs:
+    key: 'npm | "$(Agent.OS)" | package-lock.json'
+    path: $(Pipeline.Workspace)/.npm
+    cacheHitVar: NpmCacheRestored
+  displayName: 'Cache Node.js Dependencies'
+
+# Install dependencies
 - script: |
     npm install
   displayName: 'Install Dependencies'
 
+# Linting dengan fix
 - script: |
-    npx eslint . --fix
-  displayName: 'Run ESLint for Code Quality'
-  continueOnError: false
+    npx eslint . --fix --format json -o eslint-report.json
+  displayName: 'Run ESLint with Fix and Report'
 
+# Publish report
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: 'eslint-report.json'
+    ArtifactName: 'ESLint Report'
+  displayName: 'Publish ESLint Report'
+
+# Kirim email jika linting gagal
 - task: SendEmail@1
-  condition: failed()
+  condition: eq(variables['Build.Tasks.Failed'], 'Run ESLint with Fix and Report')
   inputs:
     To: 'nisarah1220@gmail.com'
     From: 'nisarah1220@gmail.com'
