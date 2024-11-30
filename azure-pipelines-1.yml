@@ -17,7 +17,7 @@ stages:
   - job: Build
     displayName: Build
     pool:
-      vmImage: Default
+      name: Default
     steps:
     - task: Docker@2
       inputs:
