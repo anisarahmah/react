@@ -16,7 +16,3 @@ steps:
       containerRegistry: 'docker'  # Service connection Docker Hub
       repository: 'anisarahmah/react'  # Nama repository di Docker Hub
       command: 'buildAndPush'
-      Dockerfile: '**/Dockerfile'  # Path ke Dockerfile
-      tags: |
-        $(Build.BuildId)
-        latest
