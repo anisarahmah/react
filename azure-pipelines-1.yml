@@ -1,23 +1,22 @@
 trigger:
 - main  # Trigger pipeline ketika ada perubahan pada branch main
 
-stages:
-- stage: BuildAndPush
-  jobs:
-    - job: BuildAndPushJob
-      steps:
-        # Checkout code dari repository
-        - task: Checkout@1
-          displayName: Checkout Code
+pool:
+  name: 'Default'
 
-        # Membangun Docker Image
-        - task: Docker@2
-          inputs:
-            containerRegistry: 'docker'
-            repository: 'anisarahmah/react'
-            command: 'buildAndPush'
-            Dockerfile: '**/Dockerfile'
-            tags: |
-              $(Build.BuildId)
-              latest
+steps:
+  # Checkout code dari repository
+  - task: Checkout@1
+    displayName: Checkout Code
 
+  # Membangun dan Mendorong Docker Image
+  - task: Docker@2
+    displayName: Build and Push Docker Image
+    inputs:
+      containerRegistry: 'docker'  # Service connection Docker Hub
+      repository: 'anisarahmah/react'  # Nama repository di Docker Hub
+      command: 'buildAndPush'
+      Dockerfile: '**/Dockerfile'  # Path ke Dockerfile
+      tags: |
+        $(Build.BuildId)
+        latest
