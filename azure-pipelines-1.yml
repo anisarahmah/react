@@ -9,10 +9,24 @@ steps:
   - task: Checkout@1
     displayName: Checkout Code
 
-  # Membangun dan Mendorong Docker Image
+  # Build Docker Image
   - task: Docker@2
-    displayName: Build and Push Docker Image
+    displayName: Build Docker Image
     inputs:
-      containerRegistry: 'docker'  # Service connection Docker Hub
-      repository: 'anisarahmah/react'  # Nama repository di Docker Hub
-      command: 'buildAndPush'
+      containerRegistry: 'docker'  # Ganti dengan nama Docker Registry Service Connection yang sesuai
+      repository: 'anisarahmah/react'  # Nama repository Docker Hub
+      command: 'build'  # Build image
+      Dockerfile: '**/Dockerfile'  # Path ke Dockerfile
+      tags: |
+        $(Build.BuildId)
+
+  # Push Docker Image ke Docker Hub
+  - task: Docker@2
+    displayName: Push Docker Image
+    inputs:
+      containerRegistry: 'docker'  # Ganti dengan nama Docker Registry Service Connection yang sesuai
+      repository: 'anisarahmah/react'  # Nama repository Docker Hub
+      command: 'push'  # Push image ke registry
+      tags: |
+        $(Build.BuildId)
+        latest
