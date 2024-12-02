@@ -1,12 +1,6 @@
 trigger:
 - main  # Trigger pipeline ketika ada perubahan pada branch main
 
-variables:
-  dockerRegistryServiceConnection: 'docker'  # Service connection ke Docker Hub
-  containerRegistry: 'docker.io'  # Docker Hub registry
-  imageName: 'anisarahmah/react'  # Nama repository di Docker Hub
-  tag: 'latest'  # Tag image
-
 stages:
 - stage: BuildAndPush
   jobs:
@@ -21,7 +15,7 @@ stages:
           displayName: Build Docker Image
           inputs:
             command: 'build'
-            containerRegistry: $(dockerRegistryServiceConnection)
+            containerRegistry: $(dockerRegistry)
             repository: $(containerRegistry)/$(imageName)
             dockerfile: '**/Dockerfile'  # Pastikan Dockerfile ada di proyekmu
             tags: $(tag)
@@ -31,6 +25,6 @@ stages:
           displayName: Push Docker Image
           inputs:
             command: 'push'
-            containerRegistry: $(dockerRegistryServiceConnection)
+            containerRegistry: $(dockerRegistry)
             repository: $(containerRegistry)/$(imageName)
             tags: $(tag)
