@@ -1,28 +1,36 @@
-# Docker
-# Build a Docker image
-# https://docs.microsoft.com/azure/devops/pipelines/languages/docker
-
-trigger: none
-
-resources:
-- repo: self
+trigger:
+- main  # Trigger pipeline ketika ada perubahan pada branch main
 
 variables:
-  tag: '$(Build.BuildId)'
+  dockerRegistryServiceConnection: 'docker'  # Service connection ke Docker Hub
+  containerRegistry: 'docker.io'  # Docker Hub registry
+  imageName: 'anisarahmah/react'  # Nama repository di Docker Hub
+  tag: 'latest'  # Tag image
 
 stages:
-- stage: Build
-  displayName: Build image
+- stage: BuildAndPush
   jobs:
-  - job: Build
-    displayName: Build
-    pool:
-      name: Default
-    steps:
-    - task: Docker@2
-      inputs:
-        containerRegistry: 'docker'
-        repository: 'anisarahmah/react'
-        command: 'buildAndPush'
-        Dockerfile: '**/Dockerfile'
-    
+    - job: BuildAndPushJob
+      steps:
+        # Checkout code dari repository
+        - task: Checkout@1
+          displayName: Checkout Code
+
+        # Membangun Docker Image
+        - task: Docker@2
+          displayName: Build Docker Image
+          inputs:
+            command: 'build'
+            containerRegistry: $(dockerRegistryServiceConnection)
+            repository: $(containerRegistry)/$(imageName)
+            dockerfile: '**/Dockerfile'  # Pastikan Dockerfile ada di proyekmu
+            tags: $(tag)
+
+        # Push Docker Image ke Docker Hub
+        - task: Docker@2
+          displayName: Push Docker Image
+          inputs:
+            command: 'push'
+            containerRegistry: $(dockerRegistryServiceConnection)
+            repository: $(containerRegistry)/$(imageName)
+            tags: $(tag)
