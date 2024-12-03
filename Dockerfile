@@ -13,6 +13,8 @@ RUN npm install
 # Menyalin seluruh file aplikasi ke dalam kontainer
 COPY . .
 
+RUN npm build
+
 # Mengekspos port 3000 (sesuaikan dengan port yang digunakan aplikasi Anda)
 EXPOSE 3000
 
